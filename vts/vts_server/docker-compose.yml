@@ -7,6 +7,13 @@ services:
     ports:
       - 3306:3306
 
+  vts:
+    build: vts/
+    container_name: vts-server
+    volumes:
+      - "./vts/configure.json:/opt/MF/MF_VTS/web/configure-bak.json"
+    ports:
+      - 8080:8080
   dkr:
     image: docker
     privileged: true
