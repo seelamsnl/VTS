@@ -6,12 +6,17 @@ services:
     container_name: db
     ports:
       - 3306:3306
+    volumes:
+      - "mysql:/var/lib/mysql:rw"
+      #- "./db:/var/lib/mysql-files"
 
   vts:
     build: vts/
     container_name: vts-server
     volumes:
-      - "./vts/configure.json:/opt/MF/MF_VTS/web/configure-bak.json"
+      - "./vts/configure.json:/opt/MF/MF_VTS/web/configure.json"
+      - "mysql:/opt/MF/MF_VTS/web/mysql/data:rw"
+      - "./db/test.csv:/opt/MF/MF_VTS/web/data/test.csv:rw"
     ports:
       - 8080:8080
   dkr:
@@ -21,6 +26,10 @@ services:
     volumes:
       - ".:/dkr"
       - "/var/run/docker.sock:/var/run/docker.sock"
+      - ./db/test.csv:/tmp/data/test.csv
     depends_on:
       - db
-    command: docker exec -it db /bin/bash mysql
+  #  command: docker exec -i db  mysql vts <<< "show tables;"
+    command: docker exec -i vts-server node <<< "vtscmd /opt/MF/MF_VTS/web/data/test.csv /port 8888"
+volumes:
+  mysql:

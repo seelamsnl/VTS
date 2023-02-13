@@ -1,5 +1,5 @@
 {
-  "dbPath": "/var/lib/MF/MF_VTS/db/data",
+  "dbPath": "/opt/MF/MF_VTS/web/mysql",
   "defaultDbName" : "Default",
   "adminPort": 4000,
   "defaultApiPort": 8888,

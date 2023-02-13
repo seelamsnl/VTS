@@ -5,6 +5,8 @@ ENV MYSQL_USER test
 ENV MYSQL_PASSWORD test
 ENV MYSQL_DATABASE test
 
+#custom mysql configuration
+COPY mysql.cnf /etc/mysql/conf.d/mysql.cnf
 # setting schema for the tables.
 COPY *.sql /docker-entrypoint-initdb.d/
 
